@@ -92,7 +92,7 @@ MooseX::Types::Path::Class - A Path::Class type library for Moose
 
   # these attributes are coerced to the
   # appropriate Path::Class objects
-  Foo->new( dir => '/some/directory/', file => '/some/file' );
+  MyClass->new( dir => '/some/directory/', file => '/some/file' );
 
   
 =head1 DESCRIPTION
