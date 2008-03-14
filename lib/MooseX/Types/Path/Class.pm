@@ -3,7 +3,7 @@ package MooseX::Types::Path::Class;
 use warnings FATAL => 'all';
 use strict;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 our $AUTHORITY = 'cpan:THEPLER';
 
 use MooseX::Getopt;
@@ -59,14 +59,14 @@ MooseX::Types::Path::Class - A Path::Class type library for Moose
 
   has 'dir' => (
       is       => 'ro',
-      isa      => Dir,
+      isa      => Dir,    # or 'Path::Class::Dir'
       required => 1,
       coerce   => 1,
   );
 
   has 'file' => (
       is       => 'ro',
-      isa      => File,
+      isa      => File,   # or 'Path::Class::File'
       required => 1,
       coerce   => 1,
   );
@@ -112,8 +112,7 @@ L<Moose>, L<MooseX::Types>, L<MooseX::Getopt>, L<Path::Class>
 
 =head1 BUGS AND LIMITATIONS
 
-All complex software has bugs lurking in it, and this module is
-no exception. If you find a bug please either email the author, or add
+If you find a bug please either email the author, or add
 the bug to cpan-RT L<http://rt.cpan.org>.
 
 
@@ -124,7 +123,7 @@ Todd Hepler  C<< <thepler@employees.org> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007, Todd Hepler C<< <thepler@employees.org> >>. All rights reserved.
+Copyright (c) 2007-2008, Todd Hepler C<< <thepler@employees.org> >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
