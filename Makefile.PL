@@ -9,10 +9,11 @@ license  'perl';
 
 # prereqs
 requires 'Class::MOP'     => 0;
-requires 'Moose'          => '0.24';
+requires 'Moose'          => '0.39';
 requires 'MooseX::Types'  => '0.04';
-requires 'MooseX::Getopt' => '0.05';
 requires 'Path::Class'    => '0.16';
+# MooseX::Getopt is optional
+#requires 'MooseX::Getopt' => '0.05';
 
 # things the tests need
 build_requires 'Test::More' => '0.62';
