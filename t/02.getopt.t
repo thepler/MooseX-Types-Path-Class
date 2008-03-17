@@ -1,9 +1,16 @@
 
 use warnings FATAL => 'all';
 use strict;
+use English qw(-no_match_vars);
+
+eval { require MooseX::Getopt; };
+if ($EVAL_ERROR) {
+    plan( skip_all => 'MooseX::Getopt required for this test' );
+}
 
 package Foo;
 use Moose;
+with 'MooseX::Getopt';
 use MooseX::Types::Path::Class;
 
 has 'dir' => (
@@ -22,6 +29,7 @@ has 'file' => (
 
 package Bar;
 use Moose;
+with 'MooseX::Getopt';
 use MooseX::Types::Path::Class qw( Dir File );
 
 has 'dir' => (
@@ -42,7 +50,7 @@ package main;
 
 use Test::More;
 use Path::Class;
-plan tests => 10;
+plan tests => 20;
 
 my $dir = dir('', 'tmp');
 my $file = file('', 'tmp', 'foo');
@@ -56,7 +64,18 @@ my $check = sub {
 };
 
 for my $class (qw(Foo Bar)) {
-    my $o = $class->new( dir => "$dir", file => [ '', 'tmp', 'foo' ] );
+    my $o;
+
+    $o = $class->new( dir => "$dir", file => [ '', 'tmp', 'foo' ] );
+    isa_ok( $o, $class );
+    $check->($o);
+    @ARGV = qw(
+        --dir
+        /tmp
+        --file
+        /tmp/foo
+    );
+    $o = $class->new_with_options;
     isa_ok( $o, $class );
     $check->($o);
 }
