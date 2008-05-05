@@ -8,43 +8,49 @@ if ($EVAL_ERROR) {
     plan( skip_all => 'MooseX::Getopt required for this test' );
 }
 
-package Foo;
-use Moose;
-with 'MooseX::Getopt';
-use MooseX::Types::Path::Class;
+{
 
-has 'dir' => (
-    is       => 'ro',
-    isa      => 'Path::Class::Dir',
-    required => 1,
-    coerce   => 1,
-);
+    package Foo;
+    use Moose;
+    with 'MooseX::Getopt';
+    use MooseX::Types::Path::Class;
 
-has 'file' => (
-    is       => 'ro',
-    isa      => 'Path::Class::File',
-    required => 1,
-    coerce   => 1,
-);
+    has 'dir' => (
+        is       => 'ro',
+        isa      => 'Path::Class::Dir',
+        required => 1,
+        coerce   => 1,
+    );
 
-package Bar;
-use Moose;
-with 'MooseX::Getopt';
-use MooseX::Types::Path::Class qw( Dir File );
+    has 'file' => (
+        is       => 'ro',
+        isa      => 'Path::Class::File',
+        required => 1,
+        coerce   => 1,
+    );
+}
 
-has 'dir' => (
-    is       => 'ro',
-    isa      => Dir,
-    required => 1,
-    coerce   => 1,
-);
+{
 
-has 'file' => (
-    is       => 'ro',
-    isa      => File,
-    required => 1,
-    coerce   => 1,
-);
+    package Bar;
+    use Moose;
+    with 'MooseX::Getopt';
+    use MooseX::Types::Path::Class qw( Dir File );
+
+    has 'dir' => (
+        is       => 'ro',
+        isa      => Dir,
+        required => 1,
+        coerce   => 1,
+    );
+
+    has 'file' => (
+        is       => 'ro',
+        isa      => File,
+        required => 1,
+        coerce   => 1,
+    );
+}
 
 package main;
 
