@@ -128,7 +128,7 @@ Returns true or false based on whether $value is a valid Dir or File.
 =item to_Dir($value), to_File($value)
 
 Attempts to coerce $value to a Dir or File.  Returns the coerced value
-or falue if the coercion failed.
+or false if the coercion failed.
 
 =back
 
