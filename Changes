@@ -1,5 +1,11 @@
 Revision history for MooseX-Types-Path-Class
 
+0.05 unreleased
+
+    * use class_type()
+
+    * make MooseX::Getopt an optional dependency
+
 0.04 Mon Nov 29 2007
 
     * fixed test on MSWin32 (cpantesters++)
