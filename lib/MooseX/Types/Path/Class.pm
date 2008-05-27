@@ -7,7 +7,7 @@ our $VERSION = '0.05';
 our $AUTHORITY = 'cpan:THEPLER';
 
 use Path::Class ();
-# TODO: export dir() and file() from Path::Class
+# TODO: export dir() and file() from Path::Class? (maybe)
 
 use MooseX::Types
     -declare => [qw( Dir File )];
@@ -42,6 +42,7 @@ if ( !$EVAL_ERROR ) {
 
 1;
 __END__
+
 
 =head1 NAME
 
@@ -89,6 +90,7 @@ L<Path::Class::Dir> and L<Path::Class::File>.
 This is just meant to be a central place for these constructs, so you
 don't have to worry about whether they've been created or not, and
 you're not tempted to copy them into yet another class (like I was).
+
 
 =head1 EXPORTS
 
