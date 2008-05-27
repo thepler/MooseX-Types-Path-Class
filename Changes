@@ -4,7 +4,11 @@ Revision history for MooseX-Types-Path-Class
 
     * use class_type()
 
-    * make MooseX::Getopt an optional dependency
+    * made MooseX::Getopt an optional dependency
+
+    * pod updates
+
+    * made Dir and File subtypes of Path::Class::*
 
 0.04 Mon Nov 29 2007
 
