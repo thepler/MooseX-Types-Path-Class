@@ -1,7 +1,7 @@
 
 use warnings FATAL => 'all';
 use strict;
-use inc::Module::Install;
+use inc::Module::Install 0.75;
 
 name     'MooseX-Types-Path-Class';
 all_from 'lib/MooseX/Types/Path/Class.pm';
