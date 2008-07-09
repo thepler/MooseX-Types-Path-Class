@@ -1,10 +1,9 @@
 
 use warnings FATAL => 'all';
 use strict;
-use English qw(-no_match_vars);
 
 eval { require MooseX::Getopt; };
-if ($EVAL_ERROR) {
+if ($@) {
     plan( skip_all => 'MooseX::Getopt required for this test' );
 }
 

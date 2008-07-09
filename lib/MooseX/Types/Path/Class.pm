@@ -33,9 +33,8 @@ for my $type ( 'Path::Class::File', File ) {
 }
 
 # optionally add Getopt option type
-use English qw(-no_match_vars);
 eval { require MooseX::Getopt; };
-if ( !$EVAL_ERROR ) {
+if ( !$@ ) {
     MooseX::Getopt::OptionTypeMap->add_option_type_to_map( $_, '=s', )
         for ( 'Path::Class::Dir', 'Path::Class::File', Dir, File, );
 }
@@ -86,10 +85,6 @@ from both 'Str' and 'ArrayRef' to both L<Path::Class::Dir> and
 L<Path::Class::File> objects.  If you have L<MooseX::Getopt> installed,
 the Getopt option type ("=s") will be added for both
 L<Path::Class::Dir> and L<Path::Class::File>.
-
-This is just meant to be a central place for these constructs, so you
-don't have to worry about whether they've been created or not, and
-you're not tempted to copy them into yet another class (like I was).
 
 
 =head1 EXPORTS
