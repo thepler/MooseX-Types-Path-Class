@@ -3,14 +3,15 @@ package MooseX::Types::Path::Class;
 use warnings FATAL => 'all';
 use strict;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
+$VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:THEPLER';
 
 use Path::Class ();
 # TODO: export dir() and file() from Path::Class? (maybe)
 
 use MooseX::Types
-    -declare => [qw( Dir File ExistingDir ExistingFile )];
+    -declare => [qw( Dir File ExistingDir ExistingFile NonExistingDir NonExistingFile )];
 
 use MooseX::Types::Moose qw(Str ArrayRef);
 
@@ -21,20 +22,28 @@ subtype Dir, as 'Path::Class::Dir';
 subtype File, as 'Path::Class::File';
 
 subtype ExistingFile, as File, where { -e $_->stringify },
-  message { "File '$_' must exist." };
+    message { "File '$_' must exist." };
 
-subtype ExistingDir, as Dir, where { -e $_->stringify && -d $_->stringify },
-  message { "Directory '$_' must exist" };
+subtype NonExistingFile, as File, where { !-e $_->stringify },
+    message { "File '$_' must not exist." };
 
-for my $type ( 'Path::Class::Dir', Dir, ExistingDir ) {
+subtype ExistingDir, as Dir,
+    where { -e $_->stringify && -d $_->stringify },
+    message { "Directory '$_' must exist" };
+
+subtype NonExistingDir, as Dir,
+    where { !-e $_->stringify },
+    message { "Directory '$_' not must exist" };
+
+for my $type ( 'Path::Class::Dir', Dir, ExistingDir, NonExistingDir ) {
     coerce $type,
-        from Str,      via { Path::Class::Dir->new($_) },
+        from Str,      via { Path::Class::Dir->new("$_") },
         from ArrayRef, via { Path::Class::Dir->new(@$_) };
 }
 
-for my $type ( 'Path::Class::File', File, ExistingFile ) {
+for my $type ( 'Path::Class::File', File, ExistingFile, NonExistingFile ) {
     coerce $type,
-        from Str,      via { Path::Class::File->new($_) },
+        from Str,      via { Path::Class::File->new("$_") },
         from ArrayRef, via { Path::Class::File->new(@$_) };
 }
 
@@ -42,7 +51,12 @@ for my $type ( 'Path::Class::File', File, ExistingFile ) {
 eval { require MooseX::Getopt; };
 if ( !$@ ) {
     MooseX::Getopt::OptionTypeMap->add_option_type_to_map( $_, '=s', )
-        for ( 'Path::Class::Dir', 'Path::Class::File', Dir, File, ExistingDir, ExistingFile );
+        for (
+            'Path::Class::Dir', 'Path::Class::File',
+            Dir,                 File,
+            ExistingDir,         ExistingFile,
+            NonExistingFile,     NonExistingDir,
+        );
 }
 
 1;
@@ -122,21 +136,46 @@ These exports can be used instead of the full class names.  Example:
       coerce   => 1,
   );
 
+Note that there are no quotes around Dir or File.
+
 =item ExistingDir, ExistingFile
 
 Like File and Dir, but the files or directories must exist on disk
 when the type is checked, and the object on disk must be a file (for
 ExistingFile) or directory (for ExistingDir).
 
-Note that there are no quotes around Dir or File.
+At no point will this library attempt to coerce a path into existence
+by creating directories or files.  The coercions for ExistingDir and ExistingFile
+simply coerce 'Str' and 'ArrayRef' to L<Path::Class> objects.
 
-=item is_Dir($value), is_File($value)
+These types do rely on I/O.  The case could be made that this makes them not
+suitable to be called "types".  Consider a file that gets removed after the
+ExistingFile type is checked.  This can be a source of difficult to find bugs
+(you've been warned).  Often, you're going to check (either explicitly or implicitly)
+whether a path exists at the point where you're actually going to use it
+anyway.  In such cases you may be better off using the Dir or File type and then
+later (say, in some method) check for existence yourself instead of using these types
+constraints that you can't really trust to remain true indefinitely.
 
-Returns true or false based on whether $value is a valid Dir or File.
 
-=item to_Dir($value), to_File($value)
+=item NonExistingDir, NonExistingFile
 
-Attempts to coerce $value to a Dir or File.  Returns the coerced value
+Like File and Dir, but the path must not exist on disk
+when the type is checked.
+
+At no point will this library attempt to coerce a path into non-existence
+by removing directories or files.  The coercions for NonExistingDir and NonExistingFile
+simply coerce 'Str' and 'ArrayRef' to L<Path::Class> objects.
+
+The same caveats regarding I/O for the Existing* types above apply here as well.
+
+=item is_$type($value)
+
+Returns true or false based on whether $value passes the constraint for $type.
+
+=item to_$type($value)
+
+Attempts to coerce $value to the given $type.  Returns the coerced value
 or false if the coercion failed.
 
 =back
@@ -160,7 +199,7 @@ Todd Hepler  C<< <thepler@employees.org> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007-2008, Todd Hepler C<< <thepler@employees.org> >>.
+Copyright (c) 2007-2009, Todd Hepler C<< <thepler@employees.org> >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
