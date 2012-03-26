@@ -3,10 +3,6 @@ package MooseX::Types::Path::Class;
 use warnings FATAL => 'all';
 use strict;
 
-our $VERSION = '0.06';
-$VERSION = eval $VERSION;
-our $AUTHORITY = 'cpan:THEPLER';
-
 use Path::Class ();
 # TODO: export dir() and file() from Path::Class? (maybe)
 
