@@ -1,5 +1,9 @@
 Revision history for MooseX-Types-Path-Class
 
+0.06 unreleased
+
+    * added ExistingFile and ExistingDir types (jrockway)
+
 0.05 Tue Oct 21 2008
 
     * use class_type()
