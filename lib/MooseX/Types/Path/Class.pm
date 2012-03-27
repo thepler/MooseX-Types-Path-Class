@@ -177,6 +177,11 @@ or false if the coercion failed.
 =back
 
 
+=head1 SEE ALSO
+
+L<MooseX::Types::Path::Class::MoreCoercions>
+
+
 =head1 DEPENDENCIES
 
 L<Moose>, L<MooseX::Types>, L<Path::Class>
