@@ -33,13 +33,13 @@ subtype NonExistingDir, as Dir,
 
 for my $type ( 'Path::Class::Dir', Dir, ExistingDir, NonExistingDir ) {
     coerce $type,
-        from Str,      via { Path::Class::Dir->new("$_") },
+        from Str,      via { Path::Class::Dir->new($_) },
         from ArrayRef, via { Path::Class::Dir->new(@$_) };
 }
 
 for my $type ( 'Path::Class::File', File, ExistingFile, NonExistingFile ) {
     coerce $type,
-        from Str,      via { Path::Class::File->new("$_") },
+        from Str,      via { Path::Class::File->new($_) },
         from ArrayRef, via { Path::Class::File->new(@$_) };
 }
 
