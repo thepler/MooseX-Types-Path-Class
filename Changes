@@ -4,6 +4,10 @@ Revision history for MooseX-Types-Path-Class
 
     * added ExistingFile and ExistingDir types (jrockway)
 
+    * added pointer to MooseX::Types::Path::Class::MoreCoercions in pod
+
+    * converted git repo to Dist::Zilla
+
 0.05 Tue Oct 21 2008
 
     * use class_type()
