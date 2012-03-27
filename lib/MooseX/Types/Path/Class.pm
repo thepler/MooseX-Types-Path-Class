@@ -200,7 +200,7 @@ Todd Hepler  C<< <thepler@employees.org> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007-2009, Todd Hepler C<< <thepler@employees.org> >>.
+Copyright (c) 2007-2012, Todd Hepler C<< <thepler@employees.org> >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
