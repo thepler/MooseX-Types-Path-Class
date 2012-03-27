@@ -23,7 +23,7 @@ package main;
 use strict;
 use warnings;
 use Test::More;
-use Test::Exception;
+use Test::Fatal;
 
 my $no_exist = '/should/not/exist';
 
@@ -39,10 +39,16 @@ ok is_ExistingFile(to_ExistingFile("/etc/passwd")), '/etc/passwd is an existing 
 
 ok is_ExistingDir(to_ExistingDir("/etc/")), '/etc/ is an existing directory';
 
-throws_ok { Bar->new( dir => $no_exist ); }
-    qr/Directory .* must exist/, 'no exist dir throws';
-throws_ok { Bar->new( file => "$no_exist/either" ); }
-    qr/File .* must exist/, 'no exist file throws';
+like(
+    exception { Bar->new(dir  => $no_exist); },
+    qr/Directory .* must exist/,
+    'no exist dir throws',
+);
+like(
+    exception { Bar->new(file => "$no_exist/either"); },
+    qr/File .* must exist/,
+    'no exist file throws',
+);
 
 done_testing;
 
