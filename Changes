@@ -2,7 +2,7 @@ Revision history for MooseX-Types-Path-Class
 
 0.06 unreleased
 
-    * added pointer to MooseX::Types::Path::Class::MoreCoercions in pod
+    * added SEE ALSO section in pod
 
     * converted git repo to Dist::Zilla
 
