@@ -20,12 +20,20 @@ for my $type ( 'Path::Class::Dir', Dir ) {
     coerce $type,
         from Str,      via { Path::Class::Dir->new($_) },
         from ArrayRef, via { Path::Class::Dir->new(@$_) };
+
+    coerce ArrayRef[$type],
+        from ArrayRef[Str], via { [ map { Path::Class::Dir->new($_) } @$_ ] },
+        from ArrayRef[ArrayRef], via { [ map { Path::Class::Dir->new(@$_) } @$_ ] };
 }
 
 for my $type ( 'Path::Class::File', File ) {
     coerce $type,
         from Str,      via { Path::Class::File->new($_) },
         from ArrayRef, via { Path::Class::File->new(@$_) };
+
+    coerce ArrayRef[$type],
+        from ArrayRef[Str], via { [ map { Path::Class::File->new($_) } @$_ ] },
+        from ArrayRef[ArrayRef], via { [ map { Path::Class::File->new(@$_) } @$_ ] };
 }
 
 # optionally add Getopt option type
