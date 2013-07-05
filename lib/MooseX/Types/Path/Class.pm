@@ -22,8 +22,12 @@ for my $type ( 'Path::Class::Dir', Dir ) {
         from ArrayRef, via { Path::Class::Dir->new(@$_) };
 
     coerce ArrayRef[$type],
-        from ArrayRef[Str], via { [ map { Path::Class::Dir->new($_) } @$_ ] },
-        from ArrayRef[ArrayRef], via { [ map { Path::Class::Dir->new(@$_) } @$_ ] };
+        from ArrayRef, via { 
+            print "### in ArrayRef[Str] -> ArrayRef[$type] coercion\n";
+            [ map { Path::Class::Dir->new($_) } @$_ ] };
+#        from ArrayRef[ArrayRef], via {
+#            print "### in ArrayRef[ArrayRef] -> ArrayRef[$type] coercion\n";
+#            [ map { Path::Class::Dir->new(@$_) } @$_ ] };
 }
 
 for my $type ( 'Path::Class::File', File ) {
@@ -31,9 +35,13 @@ for my $type ( 'Path::Class::File', File ) {
         from Str,      via { Path::Class::File->new($_) },
         from ArrayRef, via { Path::Class::File->new(@$_) };
 
-    coerce ArrayRef[$type],
-        from ArrayRef[Str], via { [ map { Path::Class::File->new($_) } @$_ ] },
-        from ArrayRef[ArrayRef], via { [ map { Path::Class::File->new(@$_) } @$_ ] };
+#    coerce ArrayRef[$type],
+#        from ArrayRef[Str], via {
+#            print "### in ArrayRef[Str] -> ArrayRef[$type] coercion\n";
+#            [ map { Path::Class::File->new($_) } @$_ ] },
+#        from ArrayRef[ArrayRef], via {
+#            print "### in ArrayRef[ArrayRef] -> ArrayRef[$type] coercion\n";
+#            [ map { Path::Class::File->new(@$_) } @$_ ] };
 }
 
 # optionally add Getopt option type
